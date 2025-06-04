@@ -1,26 +1,33 @@
 import React, { useState } from 'react';
+import AboutEditorPanel from './AboutEditorPanel';
 
-export default function AboutSection() {
-  const [showContent, setShowContent] = useState(false);
+const AboutSection = () => {
+  const [isEditorOpen, setIsEditorOpen] = useState(false);
+  const [aboutContent, setAboutContent] = useState("This is a default about section. Click 'Edit About' to change it.");
 
   return (
-    <div className="max-w-3xl mx-auto p-6 my-8 bg-white rounded shadow">
-      <button
-        onClick={() => setShowContent(!showContent)}
-        className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 focus:outline-none"
-      >
-        About
-      </button>
+    <div className="p-4">
+      <div className="flex justify-between items-center">
+        <h2 className="text-xl font-bold">About</h2>
+        <button
+          onClick={() => setIsEditorOpen(true)}
+          className="text-sm bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700"
+        >
+          Edit About
+        </button>
+      </div>
 
-      {showContent && (
-        <div className="mt-4 text-gray-700">
-          <h2 className="text-2xl font-semibold mb-2">About Our Website</h2>
-          <p>
-            Welcome to our website! We provide the best solutions to help you build amazing projects
-            with ease. Our platform is designed with user experience and customization in mind.
-          </p>
-        </div>
+      <p className="mt-2 text-gray-700 whitespace-pre-wrap">{aboutContent}</p>
+
+      {isEditorOpen && (
+        <AboutEditorPanel
+          content={aboutContent}
+          onClose={() => setIsEditorOpen(false)}
+          onSave={(newContent) => setAboutContent(newContent)}
+        />
       )}
     </div>
   );
-}
+};
+
+export default AboutSection;
